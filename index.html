@@ -10,26 +10,58 @@
   header { background: #1a1a2e; color: #fff; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
   header h1 { font-size: 1.3rem; font-weight: 600; }
   header .meta { font-size: 0.85rem; color: #aaa; }
+  
   .controls { background: #fff; border-bottom: 1px solid #e0e0d8; padding: 1rem 2rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
   .controls select, .controls button { padding: 0.45rem 0.9rem; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem; background: #fff; cursor: pointer; }
   .controls button { background: #1a1a2e; color: #fff; border-color: #1a1a2e; font-weight: 500; }
   .controls button:hover { background: #2a2a4e; }
   .controls button.secondary { background: #fff; color: #333; border-color: #ccc; }
   .controls button.secondary:hover { background: #f0f0ea; }
+  
   .score-bar { background: #fff; padding: 0.7rem 2rem; border-bottom: 1px solid #e0e0d8; font-size: 0.9rem; color: #555; display: flex; gap: 2rem; flex-wrap: wrap; }
   .score-bar span { font-weight: 600; }
   .score-bar .correct { color: #2d7a2d; }
   .score-bar .wrong { color: #b33; }
   .score-bar .skip { color: #888; }
+  
+  .progress-wrap { height: 6px; background: #e0e0d8; border-radius: 3px; margin: 0 2rem 0; }
+  .progress-fill { height: 100%; background: #1a1a2e; border-radius: 3px; transition: width 0.3s; }
+  
   .questions { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; display: flex; flex-direction: column; gap: 2rem; }
-  .q-card { background: #fff; border-radius: 10px; border: 1px solid #e0e0d8; padding: 1.5rem; }
+  .q-card { background: #fff; border-radius: 10px; border: 1px solid #e0e0d8; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
   .q-header { display: flex; gap: 0.7rem; align-items: flex-start; margin-bottom: 1.2rem; }
   .q-num { background: #1a1a2e; color: #fff; border-radius: 50%; min-width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; flex-shrink: 0; }
-  .q-badge { font-size: 0.72rem; background: #f0f0ea; color: #666; border-radius: 20px; padding: 2px 8px; margin-right: 4px; white-space: nowrap; }
+  .q-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .q-badge { font-size: 0.72rem; background: #f0f0ea; color: #666; border-radius: 20px; padding: 2px 8px; white-space: nowrap; }
   .q-topic { font-size: 0.72rem; background: #e8f0fe; color: #1a56db; border-radius: 20px; padding: 2px 8px; white-space: nowrap; }
+  
   .q-text { font-size: 0.95rem; line-height: 1.55; color: #222; flex: 1; }
-  .q-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.8rem; padding-left: 2.2rem; }
-  .options { display: flex; flex-direction: column; gap: 0.5rem; }
+  
+  /* --- NUEVOS ESTILOS PARA CÓDIGO --- */
+  .code-block {
+    background: #1e1e2e;
+    color: #cba6f7;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-family: 'Courier New', Consolas, Menlo, monospace;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+  }
+  .inline-code {
+    background: #f0f0f4;
+    color: #d20f39;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-family: 'Courier New', Consolas, Menlo, monospace;
+    font-size: 0.9em;
+  }
+  /* --------------------------------- */
+
+  .options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
   .opt { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.65rem 0.9rem; border-radius: 7px; border: 1.5px solid #e0e0d8; cursor: pointer; font-size: 0.9rem; line-height: 1.5; transition: border-color 0.15s, background 0.15s; }
   .opt:hover { border-color: #aaa; background: #fafaf8; }
   .opt.selected { border-color: #1a1a2e; background: #f0f0f8; }
@@ -40,47 +72,20 @@
   .opt.correct .opt-letter { color: #2d7a2d; }
   .opt.wrong .opt-letter { color: #b33; }
   .opt.correct-answer .opt-letter { color: #b07800; }
+  
   .q-status { margin-top: 1rem; padding: 0.6rem 0.9rem; border-radius: 6px; font-size: 0.85rem; display: none; }
   .q-status.show { display: block; }
   .q-status.ok { background: #f0fff0; color: #2d7a2d; border: 1px solid #b3e6b3; }
   .q-status.fail { background: #fff0f0; color: #b33; border: 1px solid #f5b3b3; }
-  .q-status.info { background: #fffbea; color: #7a5000; border: 1px solid #f5dcaa; }
+  
   .q-card.answered .opt { cursor: default; pointer-events: none; }
   .q-card.answered .opt:hover { background: inherit; border-color: inherit; }
-  .q-card.answered .opt.correct { background: #f0fff0; border-color: #2d7a2d; }
-  .q-card.answered .opt.wrong { background: #fff0f0; border-color: #b33; }
-  .q-card.answered .opt.correct-answer { background: #fffbea; border-color: #f0a000; }
-  .q-card.answered .opt.selected.correct-answer { background: #fffbea; border-color: #f0a000; }
-  .progress-wrap { height: 6px; background: #e0e0d8; border-radius: 3px; margin: 0 2rem 0; }
-  .progress-fill { height: 100%; background: #1a1a2e; border-radius: 3px; transition: width 0.3s; }
+  
   .empty { text-align: center; color: #888; padding: 4rem 2rem; font-size: 1rem; }
   .topic-section h2 { font-size: 1rem; color: #555; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; padding: 0 0.5rem; border-left: 3px solid #1a1a2e; padding-left: 0.75rem; }
   .section-wrap { display: flex; flex-direction: column; gap: 1.5rem; }
+  
   @media (max-width: 600px) { .controls { flex-direction: column; } .score-bar { gap: 1rem; } }
-  /* ==== Bloques de código para preguntas semánticas ==== */
- .code-block{
-   background:#f7f7f9;
-   border:1px solid #e0e0e0;
-   border-left:4px solid #1a1a2e;
-   border-radius:6px;
-   padding:0.7rem 0.8rem;
-   margin-top:0.6rem;
-   font-family: "Courier New", monospace;
-   font-size:0.85rem;
-   white-space:pre-wrap;
-   line-height:1.45;
-   color:#333;
- }
-  .q-card.semantic{
-   border-left:5px solid #7a3cff;
- }
- .q-card.semantic .q-topic{
-   background:#f1e8ff;
-   color:#5c2bd6;
- }
- .q-card.semantic .opt{
-   line-height:1.6;
- }
 </style>
 </head>
 <body>
@@ -123,23 +128,30 @@
 <div class="questions" id="questionsContainer"></div>
 
 <script>
+// Función para escapar strings y que no se rompan las gramáticas (<Exp>, etc) en las opciones
+function escapeHTML(str) {
+  return str.replace(/[&<>'"]/g, tag => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  }[tag]));
+}
+
 const ALL_QUESTIONS = [
   // ===== 2020-2021 =====
   {year:"2020",topic:"lexic",q:"¿Porque se utiliza una AFD para implementar un scanner en vez de un AFND que es más fácil de crear?",opts:["Porque dado un carácter leído y un estado sabemos a que estado irá el AFD.","Porque los AFD permiten diferenciar símbolos que empiezan por la misma secuencia de caracteres y los AFND no pueden.","Porque en la ejecución de un AFD sólo necesitamos una variable para guardar el estado en que está.","a) y c).","Ninguna de las anteriores."],ans:3},
   {year:"2020",topic:"lexic",q:"¿Que efecto tiene una transición por secuencia vacía de un estado A a un estado B?",opts:["Que los estados A y B son equivalentes ya que siempre estaremos en los dos estados a la vez.","Que al estar en el estado A también estamos en el estado B.","Que al estar en el estado B también estamos en el estado A.","Que cuando llegamos en el estado A hacemos la transición al estado B abandonando el estado A.","Ninguna de las anteriores."],ans:1},
   {year:"2020",topic:"lexic",q:"El autómata que se utiliza para implementar un scanner...",opts:["Ha leído un símbolo cuando llega al final de la secuencia de caracteres y está en un estado final.","Ha leído un símbolo cuando ya no puede hacer más transiciones.","Ha leído un símbolo cuando ya no puede hacer más transiciones y está en un estado final.","Ha leído un símbolo cuando ya no puede hacer más transiciones y ha pasado por un estado final.","Ninguna de las anteriores."],ans:3},
   {year:"2020",topic:"sintax",q:"El análisis sintáctico:",opts:["Lee los caracteres de entrada y los convierte en símbolos.","Se encarga de comprobar que el programa cumpla aquellas restricciones dependientes del contexto del lenguaje de programación.","Agrupa los símbolos de la secuencia de entrada en estructuras sintácticas que forman el árbol sintáctico.","Todas las anteriores.","Ninguna de las anteriores."],ans:2},
-  {year:"2020",topic:"sintax",q:"¿Cuántos símbolos no terminales aparecen en el árbol sintáctico generado para la expresión: if (a+30) then b*5 else d\n\nCuando se analiza con la siguiente gramática:\nRule <Inicial>::= <Exp> | If <Exp> then <Exp> else <Exp>\nRule <Exp>::= <Terme> {(\"+\"|\"-\") <Terme>}\nRule <Terme>::= <Factor> {(\"*\"|\"/\") <Factor>}\nRule <Factor>::= numero | identificador [\"=\" <Exp>] | \"(\" <Exp> \")\"",opts:["18","16","17","15","Ninguna de las anteriores."],ans:1},
-  {year:"2020",topic:"sintax",q:"Sobre la gramática siguiente:\nR1 <Inicial>::= <Exp> | var identificador [\"[\"<Exp>\"]\"]\nR2 <Exp>::= <factor> {(\"+\"|\"-\") <factor>}\nR3 <Factor>::= numero | identificador [\"=\" <Exp>] | \"(\" <Exp> \")\"\n\n¿Cuántas producciones resultan de la conversión de las reglas BNF descritas anteriormente?",opts:["16","14","12","15","Ninguna de las anteriores."],ans:0},
-  {year:"2020",topic:"sintax",q:"Sobre la gramática anterior (R1, R2, R3):\n\n¿Cuáles son los primeros de los símbolos no terminales?",opts:["<Inicial> = {numero, identificador, \"(\", \"=\"}\n<Exp> = {numero, identificador, \"(\", \"=\"}\n<Factor> = {numero, identificador, \"(\", \"=\"}","<Inicial> = {numero, identificador, \"(\", \"=\", var, \"[\"}\n<Exp> = {numero, identificador, \"(\", \"=\"}\n<Factor> = {numero, identificador, \"(\", \"=\"}","<Inicial> = {numero, identificador, \"(\", var}\n<Exp> = {numero, identificador, \"(\"}\n<Factor> = {numero, identificador, \"(\"}","<Inicial> = {numero, identificador, \"(\", var}\n<Exp> = {numero, identificador, \"(\", \"=\", \"+\", \"-\"}\n<Factor> = {numero, identificador, \"(\", \"=\"}","Ninguna de las anteriores."],ans:2},
+  {year:"2020",topic:"sintax",q:"¿Cuántos símbolos no terminales aparecen en el árbol sintáctico generado para la expresión: <code class=\"inline-code\">if (a+30) then b*5 else d</code><br><br>Cuando se analiza con la siguiente gramática:<pre class=\"code-block\">Rule &lt;Inicial&gt;::= &lt;Exp&gt; | If &lt;Exp&gt; then &lt;Exp&gt; else &lt;Exp&gt;\nRule &lt;Exp&gt;::= &lt;Terme&gt; {(\"+\"|\"-\") &lt;Terme&gt;}\nRule &lt;Terme&gt;::= &lt;Factor&gt; {(\"*\"|\"/\") &lt;Factor&gt;}\nRule &lt;Factor&gt;::= numero | identificador [\"=\" &lt;Exp&gt;] | \"(\" &lt;Exp&gt; \")\"</pre>",opts:["18","16","17","15","Ninguna de las anteriores."],ans:1},
+  {year:"2020",topic:"sintax",q:"Sobre la gramática siguiente:<pre class=\"code-block\">R1 &lt;Inicial&gt;::= &lt;Exp&gt; | var identificador [\"[\"&lt;Exp&gt;\"]\"]\nR2 &lt;Exp&gt;::= &lt;factor&gt; {(\"+\"|\"-\") &lt;factor&gt;}\nR3 &lt;Factor&gt;::= numero | identificador [\"=\" &lt;Exp&gt;] | \"(\" &lt;Exp&gt; \")\"</pre>¿Cuántas producciones resultan de la conversión de las reglas BNF descritas anteriormente?",opts:["16","14","12","15","Ninguna de las anteriores."],ans:0},
+  {year:"2020",topic:"sintax",q:"Sobre la gramática anterior (R1, R2, R3):<br><br>¿Cuáles son los primeros de los símbolos no terminales?",opts:["<Inicial> = {numero, identificador, \"(\", \"=\"}\n<Exp> = {numero, identificador, \"(\", \"=\"}\n<Factor> = {numero, identificador, \"(\", \"=\"}","<Inicial> = {numero, identificador, \"(\", \"=\", var, \"[\"}\n<Exp> = {numero, identificador, \"(\", \"=\"}\n<Factor> = {numero, identificador, \"(\", \"=\"}","<Inicial> = {numero, identificador, \"(\", var}\n<Exp> = {numero, identificador, \"(\"}\n<Factor> = {numero, identificador, \"(\"}","<Inicial> = {numero, identificador, \"(\", var}\n<Exp> = {numero, identificador, \"(\", \"=\", \"+\", \"-\"}\n<Factor> = {numero, identificador, \"(\", \"=\"}","Ninguna de las anteriores."],ans:2},
   {year:"2020",topic:"sintax",q:"¿Cuándo decimos que una gramática es ambigua?",opts:["Cuando genera un árbol sintáctico para cada secuencia de símbolos.","Cuando genera más de una secuencia de derivación para una misma secuencia de símbolos.","Cuando a partir de la misma secuencia de derivación genera más de una secuencia de símbolos.","Cuando genera más de un árbol sintáctico para alguna secuencia de símbolos.","Ninguna de las anteriores."],ans:3},
   {year:"2020",topic:"semantic",q:"¿Qué son los símbolos de acción en una gramática?",opts:["Es código que se ejecutará cuando el analizador sintáctico pasa por el punto de la regla BNF donde está el símbolo de acción.","Es una forma de agrupar símbolos no terminales. Un símbolo de acción genera secuencias de símbolos no terminales.","Son una representación del significado del símbolo no terminal que hay a la izquierda de ::= en las reglas BNF.","Un símbolo de acción representa una eliminación o inserción de símbolos terminales en la secuencia de símbolos leídos por el scanner.","Ninguna de las anteriores."],ans:0},
   {year:"2020",topic:"semantic",q:"La tabla de símbolos de un lenguaje orientado a objeto...",opts:["Tiene un grafo cíclico cuyos vértices representan las clases y las aristas las relaciones de herencia.","Tiene un grafo acíclico cuyos vértices representan las clases y las aristas las relaciones de herencia.","Tiene una pila para representar los ámbitos locales y un grafo cíclico cuyos vértices representan las clases y las aristas las relaciones de herencia.","Tiene una pila para representar los ámbitos locales y un grafo acíclico cuyos vértices representan las clases y las aristas las relaciones de herencia.","Ninguna de las anteriores."],ans:3},
   {year:"2020",topic:"semantic",q:"Los tipos de datos se representan como...",opts:["Una estructura de datos recursiva acíclica.","Una estructura de datos recursiva que puede ser cíclica.","Una estructura de datos de tamaño fijo.","Una estructura de datos no recursiva.","Ninguna de las anteriores."],ans:1},
   {year:"2020",topic:"semantic",q:"¿Cuáles son los tipos de búsquedas en la tabla de símbolos más importantes?",opts:["La búsqueda de un símbolo dentro del ámbito local y la búsqueda de un símbolo por todos los ámbitos accesibles de la tabla de símbolos.","La búsqueda de una clase en el ámbito global y la búsqueda de variables en todos los ámbitos anidados que hay en la tabla de símbolos.","La búsqueda de una clase en ámbitos locales y en el ámbito global, y la búsqueda de variables en todos los ámbitos anidados que hay en la tabla de símbolos.","La búsqueda de variables en todos los ámbitos anidados que hay en la tabla de símbolos y la búsqueda de miembros en las clases.","Ninguna de las anteriores."],ans:0},
-  {year:"2020",topic:"semantic",q:"¿Cuándo hay que insertar en la tabla de símbolos la entrada del tipo de datos que se declara?\n\nRule <DecTipus>::= Type identificador = <tipus> ;\nRule <tipus>::= Integer | Real | Character | Bool | ^ <tipus> | Array \"[\" numero \"]\" of <tipus> | identificador",opts:["Al final de la regla <DecTipus> después de <tipus>.","Antes de <tipus> en la regla <DecTipus>.","Antes de identificador en la regla <DecTipus>.","Dentro de la regla de <tipus> justo después de ::=.","Ninguna de las anteriores."],ans:1},
-  {year:"2020",topic:"semantic",q:"¿Qué acciones semánticas se han de hacer en la regla <terme> cuando el análisis sintáctico pasa por dentro de la repetición?\n\nRule <terme>::=<factor> {* <factor> | / <factor>}",opts:["Verificar que queremos que <terme> de un resultado.","Que los tipos de datos de los factores sean entero o real.","Que el tipo de datos del resultado de <terme> será un right-value entero o real según las reglas de los operadores * y /","Todas las anteriores.","Ninguna de las anteriores."],ans:3},
-  {year:"2020",topic:"semantic",q:"¿En la regla <factor> que significados correctos puede tener identificador?\n\nRule <Factor>::= Numero | Caracter | String | True | False | Null | ! <Factor> | - <Factor>| & <Factor> | \"(\" <Expressio> \")\" | \"new\" <Tipus> [<parametres>] | (This | Identificador [<Parametres>]) <Acces> [= <Expressio>]",opts:["Puede ser una variable, una función y un procedimiento.","Puede ser una variable, una función, un procedimiento, un atributo de una clase y un método de una clase.","Puede ser una variable, una función, un procedimiento, un atributo de una clase, un método de una clase y una clase.","Puede ser una variable, una función, un procedimiento y una clase.","Ninguna de las anteriores."],ans:2},
+  {year:"2020",topic:"semantic",q:"¿Cuándo hay que insertar en la tabla de símbolos la entrada del tipo de datos que se declara?<pre class=\"code-block\">Rule &lt;DecTipus&gt;::= Type identificador = &lt;tipus&gt; ;\nRule &lt;tipus&gt;::= Integer | Real | Character | Bool | ^ &lt;tipus&gt; | Array \"[\" numero \"]\" of &lt;tipus&gt; | identificador</pre>",opts:["Al final de la regla <DecTipus> después de <tipus>.","Antes de <tipus> en la regla <DecTipus>.","Antes de identificador en la regla <DecTipus>.","Dentro de la regla de <tipus> justo después de ::=.","Ninguna de las anteriores."],ans:1},
+  {year:"2020",topic:"semantic",q:"¿Qué acciones semánticas se han de hacer en la regla <code class=\"inline-code\">&lt;terme&gt;</code> cuando el análisis sintáctico pasa por dentro de la repetición?<pre class=\"code-block\">Rule &lt;terme&gt;::=&lt;factor&gt; {* &lt;factor&gt; | / &lt;factor&gt;}</pre>",opts:["Verificar que queremos que <terme> de un resultado.","Que los tipos de datos de los factores sean entero o real.","Que el tipo de datos del resultado de <terme> será un right-value entero o real según las reglas de los operadores * y /","Todas las anteriores.","Ninguna de las anteriores."],ans:3},
+  {year:"2020",topic:"semantic",q:"¿En la regla <code class=\"inline-code\">&lt;factor&gt;</code> que significados correctos puede tener identificador?<pre class=\"code-block\">Rule &lt;Factor&gt;::= Numero | Caracter | String | True | False | Null | ! &lt;Factor&gt; | - &lt;Factor&gt;| &amp; &lt;Factor&gt; | \"(\" &lt;Expressio&gt; \")\" | \"new\" &lt;Tipus&gt; [&lt;parametres&gt;] | (This | Identificador [&lt;Parametres&gt;]) &lt;Acces&gt; [= &lt;Expressio&gt;]</pre>",opts:["Puede ser una variable, una función y un procedimiento.","Puede ser una variable, una función, un procedimiento, un atributo de una clase y un método de una clase.","Puede ser una variable, una función, un procedimiento, un atributo de una clase, un método de una clase y una clase.","Puede ser una variable, una función, un procedimiento y una clase.","Ninguna de las anteriores."],ans:2},
 
   // ===== 2021-2022 =====
   {year:"2021",topic:"lexic",q:"¿Qué se ha especificar para poder definir el análisis lexicográfico de un lenguaje de programación?",opts:["Las expresiones regulares de los símbolos del lenguaje y la expresión regular de los separadores.","Las expresiones regulares de los símbolos del lenguaje, los algoritmos de cálculo de los atributos de los símbolos y la expresión regular de los separadores.","Las expresiones regulares de los símbolos del lenguaje, la expresión regular de los separadores y los algoritmos de cálculo de los atributos de los símbolos y separadores.","Las expresiones regulares de los símbolos del lenguaje.","Ninguna de las anteriores."],ans:1},
@@ -150,13 +162,13 @@ const ALL_QUESTIONS = [
   {year:"2021",topic:"sintax",q:"Un árbol sintáctico de una secuencia de símbolos está compuesto por...",opts:["Por la secuencia de producciones aplicadas en los pasos de derivación de una secuencia de símbolos, donde cada nodo del árbol es el símbolo de la izquierda de una producción y los hijos los símbolos de la derecha de la producción.","Las hojas del árbol sintáctico son símbolos terminales y los nodos intermedios son símbolos no terminales.","a) y b).","Las hojas y nodos intermedios del árbol sintáctico son símbolos terminales.","Ninguna de las anteriores."],ans:2},
   {year:"2021",topic:"sintax",q:"En los conjuntos de siguientes de los símbolos no terminales de una gramática podemos encontrar:",opts:["Símbolos no terminales, símbolos terminales, la secuencia vacía y el final de secuencia.","Símbolos no terminales, símbolos terminales y el final de secuencia.","Símbolos terminales y el final de secuencia.","Símbolos terminales y la secuencia vacía.","Ninguna de las anteriores."],ans:2},
   {year:"2021",topic:"sintax",q:"¿Que han de cumplir una gramática para que sea LL(1)?",opts:["Que los conjuntos de primeros de las producciones del mismo símbolo no terminal sean disjuntos.","Que los conjuntos de primeros de las producciones de la gramática sean disjuntos.","Que los conjuntos de primeros de los símbolos no terminales sean disjuntos.","Que los conjuntos de siguientes de los símbolos no terminales sean disjuntos.","Ninguna de las anteriores."],ans:0},
-  {year:"2021",topic:"sintax",q:"¿Qué secuencia de símbolos representa la expresión BNF: [x|{y}] x",opts:["x y x y x","x x x","y y y x","x y y y x","Ninguna de las anteriores."],ans:2},
+  {year:"2021",topic:"sintax",q:"¿Qué secuencia de símbolos representa la expresión BNF: <code class=\"inline-code\">[x|{y}] x</code>",opts:["x y x y x","x x x","y y y x","x y y y x","Ninguna de las anteriores."],ans:2},
   {year:"2021",topic:"semantic",q:"El análisis semántico...",opts:["Calcula atributos de símbolos terminales.","Calcula atributos de símbolos no terminales.","Verifica que los atributos cumplan con las restricciones del lenguaje.","Todas las anteriores.","Ninguna de las anteriores."],ans:3},
   {year:"2021",topic:"semantic",q:"En un lenguaje orientado a objeto la tabla de símbolos tiene estructura...",opts:["De pila para los ámbitos anidados y de grafo para las clases.","De grafo para los ámbitos anidados y de pila para las clases.","De pila para los ámbitos anidados.","De pila para los ámbitos anidados y de grafo acíclico para las clases.","Ninguna de las anteriores."],ans:3},
   {year:"2021",topic:"semantic",q:"El atributo tipos de datos...",opts:["Está representado por una estructura dinámica que puede ser cíclica.","Está representado por una estructura dinámica lineal.","Está representado por una estructura dinámica que puede ser cíclica y compartida parcial o totalmente por varios símbolos.","Está representado por una estructura dinámica lineal y no compartida por el significado de los símbolos que hay en la tabla de símbolos.","Ninguna de las anteriores."],ans:2},
-  {year:"2021",topic:"semantic",q:"En un programa correcto, la búsqueda del identificador de la regla <PossibleLValue> en la tabla de símbolos puede dar...\n\nEjemplos: a=10; c=f(3,4); obj=Point(10,20);",opts:["Una o más entradas de la tabla de símbolos.","ETSVar para variables o campos de clase/objeto.","ETSFuncion para llamadas a funciones, procedimientos o métodos, ETSTipus para llamadas a constructores.","Todas las anteriores.","Ninguna de las anteriores."],ans:3},
-  {year:"2021",topic:"semantic",q:"El análisis semántico de la instrucción while <expressio> do <instruccio> verifica...",opts:["Que el resultado de <expressio> sea de tipo booleano.","Que el resultado de <expressio> sea de tipo booleano y que <instrucción> no de ningún resultado.","Que el resultado de <expressio> sea de tipo booleano o integer.","Que el resultado de <expressio> sea true para ejecutar <instruccio> y false para salir del bucle.","Ninguna de las anteriores."],ans:0},
-  {year:"2021",topic:"semantic",q:"En la declaración de un tipo de datos, ¿Cuándo hay que poner ETSTipus en la tabla de símbolos?\n\n<DecTipus>::= identificador (1) = <tipus> (2)",opts:["Se ha de poner en la tabla de símbolos en (2) para que no se puede utilizar durante la compilación de <tipus>.","Se ha de poner en la tabla de símbolos en (1) para que se puede utilizar durante la compilación de <tipus>.","Es indiferente poner ETSTipus en (1) o (2) ya que no hay forma de utilizar un tipo de datos dentro de <tipus>.","Se ha de poner en la tabla de símbolos en (1) para que se puede utilizar durante la compilación de <tipus> dentro del tipo de datos base de un apuntador (tipo de datos apuntado).","Ninguna de las anteriores."],ans:3},
+  {year:"2021",topic:"semantic",q:"En un programa correcto, la búsqueda del identificador de la regla <code class=\"inline-code\">&lt;PossibleLValue&gt;</code> en la tabla de símbolos puede dar...<br><br>Ejemplos: <code class=\"inline-code\">a=10; c=f(3,4); obj=Point(10,20);</code>",opts:["Una o más entradas de la tabla de símbolos.","ETSVar para variables o campos de clase/objeto.","ETSFuncion para llamadas a funciones, procedimientos o métodos, ETSTipus para llamadas a constructores.","Todas las anteriores.","Ninguna de las anteriores."],ans:3},
+  {year:"2021",topic:"semantic",q:"El análisis semántico de la instrucción <code class=\"inline-code\">while &lt;expressio&gt; do &lt;instruccio&gt;</code> verifica...",opts:["Que el resultado de <expressio> sea de tipo booleano.","Que el resultado de <expressio> sea de tipo booleano y que <instrucción> no de ningún resultado.","Que el resultado de <expressio> sea de tipo booleano o integer.","Que el resultado de <expressio> sea true para ejecutar <instruccio> y false para salir del bucle.","Ninguna de las anteriores."],ans:0},
+  {year:"2021",topic:"semantic",q:"En la declaración de un tipo de datos, ¿Cuándo hay que poner ETSTipus en la tabla de símbolos?<pre class=\"code-block\">&lt;DecTipus&gt;::= identificador (1) = &lt;tipus&gt; (2)</pre>",opts:["Se ha de poner en la tabla de símbolos en (2) para que no se puede utilizar durante la compilación de <tipus>.","Se ha de poner en la tabla de símbolos en (1) para que se puede utilizar durante la compilación de <tipus>.","Es indiferente poner ETSTipus en (1) o (2) ya que no hay forma de utilizar un tipo de datos dentro de <tipus>.","Se ha de poner en la tabla de símbolos en (1) para que se puede utilizar durante la compilación de <tipus> dentro del tipo de datos base de un apuntador (tipo de datos apuntado).","Ninguna de las anteriores."],ans:3},
 
   // ===== 2022-2023 =====
   {year:"2022",topic:"lexic",q:"Per definir l’anàlisi lexicogràfica d’un llenguatge de programació s’ha de definir...",opts:["Una expressió regular per a cada símbol terminal del llenguatge, un algorisme que calculi els valors dels atributs dels símbols terminals i una expressió regular pels separadors.","Una expressió regular per a cada símbol terminal del llenguatge, una expressió regular pels separadors i un algoritme que calculi els valors dels atributs dels símbols terminals i separadors.","Una expressió regular per a cada símbol terminal i no terminal del llenguatge, un algoritme que calculi els valors dels atributs dels símbols terminals i una expressió regular pels separadors.","Una expressió regular per a cada símbol del llenguatge.","Cap de les anteriors."],ans:0},
@@ -173,7 +185,7 @@ const ALL_QUESTIONS = [
   {year:"2022",topic:"semantic",q:"Quina informació guardem a la entrada de taula de símbols de les variables de LOOS?",opts:["Nom i tipus.","Nom i valor.","Nom, tipus i valor.","Nom, tipus, valor i àmbit al qual pertany.","Cap de les anteriors."],ans:0},
   {year:"2022",topic:"semantic",q:"Com és el descriptor del tipus de dades d’un array multidimensional?",opts:["És una estructura que conté la llista de les mides de cada dimensió de l’array i el descriptor del tipus de dades dels elements de l’array.","És una estructura que conté el vector de les mides de cada dimensió de l’array i el descriptor del tipus de dades dels elements de l’array.","Està format per una llista d’estructures amb tants elements como dimensions tingui l’array i que cada una compta la mida d’una dimensió i l’apuntador a la següent. L’última apunta al descriptor del tipus de dades dels elements de l’array.","Està format per una llista d’estructures amb tants elements como dimensions tingui l’array més un. La primera estructura compta el descriptor del tipus de dades dels elements de l’array i les següents la mida de cada una de les dimensions.","Cap de les anteriors."],ans:2},
   {year:"2022",topic:"semantic",q:"Quines operacions es fan sobre la taula de símbols a les declaracions?",opts:["Comprovar si el símbol que es declara està duplicat, crear una entrada de la taula de símbols amb tots els atributs del símbol i finalment introduir-la al final de la taula de símbols.","Crear una entrada de la taula de símbols amb tots els atributs del símbol i introduir-la al final de la taula de símbols.","Comprovar si el símbol que es declara està duplicat i crear una entrada de la taula de símbols amb tots els atributs del símbol.","Crear una entrada de la taula de símbols amb tots els atributs del símbol.","Cap de les anteriors."],ans:0},
-  {year:"2022",topic:"semantic",q:"Que pot ser un identificador que apareix a <Factor> a LOOS?",opts:["Variable, funció o procediment.","Variable, funció o procediment o constructor.","Variable, funció o procediment, constructor o camp d’un objecte.","Variable, funció o procediment, constructor, destructor, camp d’un objecte o tipus de dades.","Cap de les anteriors."],ans:2},
+  {year:"2022",topic:"semantic",q:"Que pot ser un identificador que apareix a <code class=\"inline-code\">&lt;Factor&gt;</code> a LOOS?",opts:["Variable, funció o procediment.","Variable, funció o procediment o constructor.","Variable, funció o procediment, constructor o camp d’un objecte.","Variable, funció o procediment, constructor, destructor, camp d’un objecte o tipus de dades.","Cap de les anteriors."],ans:2},
 
   // ===== 2023-2024 =====
   {year:"2023",topic:"lexic",q:"Un escàner...",opts:["Llegeix una seqüència de caràcters i la transforma en una seqüència de símbols.","Llegeix una seqüència de caràcters i la transforma en un arbre.","Llegeix una seqüència de símbols i la transforma en un arbre.","Llegeix una seqüència de símbols terminals i la transforma en una seqüència de símbols no terminals.","Cap de les anteriors."],ans:0},
@@ -187,29 +199,29 @@ const ALL_QUESTIONS = [
   {year:"2023",topic:"sintax",q:"Per verificar que una gramàtica en BNF és LL(1) s’ha de calcular:",opts:["Les produccions de la gramàtica, el conjunto de símbols anul·lables, els conjunts de símbols primers dels símbols no terminals, els conjunts de símbols següents dels símbols no terminals i els conjunts de símbols primers de les produccions.","Les produccions de la gramàtica, els conjunts de símbols primers dels símbols no terminals, els conjunts de símbols següents dels símbols no terminals i els conjunts de símbols primers de les produccions.","Les produccions de la gramàtica, el conjunto de símbols anul·lables, els conjunts de símbols primers dels símbols no terminals, els conjunts de símbols següents dels símbols no terminals, els conjunts de símbols primers de les produccions i els conjunts de símbols següents de les produccions.","El conjunto de símbols anul·lables, els conjunts de símbols primers dels símbols no terminals, els conjunts de símbols següents dels símbols no terminals i els conjunts de símbols primers de les produccions.","Cap de les anteriors."],ans:0},
   {year:"2023",topic:"sintax",q:"De quina manera podem fer una gramàtica LL(1) què generi l’arbre sintàctic per operadors amb associativitat per la dreta i per l’esquerra correctament?",opts:["Associativitat per l’esquerra <operació>::= <operand> {operador <operand>}. Associativitat per la dreta: <operació>::= <operand> {operador <operació>}","Associativitat per l’esquerra <operació>::= {<operació> operador} <operand>. Associativitat per la dreta: <operació>::= <operand> {operador <operació>}","Associativitat per l’esquerra <operació>::= <operand> {operador <operand>}. Associativitat per la dreta: <operació>::= <operand> [operador <operació>]","Associativitat per l’esquerra <operació>::= [<operació> operador] <operand>. Associativitat per la dreta: <operació>::= <operand> [operador <operació>]","Cap de les anteriors."],ans:2},
   {year:"2023",topic:"semantic",q:"Quina estructura té la taula de símbols del llenguatge LOOS?",opts:["Pila pels àmbits niats i graf per l’herència de les classes.","Pila pels àmbits niats i graf acíclic per l’herència de les classes.","Pila pels àmbits niats i arbre per l’herència de les classes.","Pila pels àmbits niats.","Cap de les anteriors."],ans:2},
-  {year:"2023",topic:"semantic",q:"En la declaració de tipus de dades de LOOS `Type identificador = <tipus>` es fan les següents operacions a la taula de símbols:",opts:["Type identificador @{comprovar duplicat} = <tipus> @{inserir a la taula de símbols}","Type identificador = <tipus> @{ comprovar duplicat, inserir a la taula de símbols }","Type identificador @{comprovar duplicat, inserir a la taula de símbols} = <tipus>","Type identificador = <tipus> @{inserir a la taula de símbols}","Cap de les anteriors."],ans:2},
+  {year:"2023",topic:"semantic",q:"En la declaració de tipus de dades de LOOS <code class=\"inline-code\">Type identificador = &lt;tipus&gt;</code> es fan les següents operacions a la taula de símbols:",opts:["Type identificador @{comprovar duplicat} = <tipus> @{inserir a la taula de símbols}","Type identificador = <tipus> @{ comprovar duplicat, inserir a la taula de símbols }","Type identificador @{comprovar duplicat, inserir a la taula de símbols} = <tipus>","Type identificador = <tipus> @{inserir a la taula de símbols}","Cap de les anteriors."],ans:2},
   {year:"2023",topic:"semantic",q:"En una expressió variable operadors d’accés. Els operadors d’accés obtenen el descriptor del tipus de dades dels seus resultats...",opts:["Cada operador va recorrent el descriptor del tipus de dades de la variable.","Cada operador crea un nou descriptor pel tipus de dades del seu resultat.","Cada operador accedeix a la part del valor de la variable que l’hi correspon.","Cada operador cerca la variable a la taula de símbols i modifica el seu descriptor de tipus de dades.","Cap de les anteriors."],ans:0},
-  {year:"2023",topic:"semantic",q:"Quines operacions semàntiques fa el compilador de LOOS per `var a:integer(10);`",opts:["Insereix a la taula de símbols la variable \"a\".","Crear el descriptor del tipus de dades com TInt. Insereix a la taula de símbols la variable \"a\".","Crear el descriptor del tipus de dades com TInt. Insereix a la taula de símbols la variable \"a\". Crear una llista de descriptors de valor per 10.","Crear el descriptor del tipus de dades com TInt. Insereix a la taula de símbols la variable \"a\". Crear una llista de descriptors de valor per 10. Comprova que es pot construir un Tint amb la llista de descriptors.","Cap de les anteriors."],ans:4},
-  {year:"2023",topic:"semantic",q:"Si volem comprovar que la instrucció `return <expressió>` s’està utilitzant correctament hem de verificar que:",opts:["Hem de comprovar que s’utilitza dintre d’una funció. Que el tipus de dades del resultat de l’expressió és el mateix que el tipus de dades que retorna la funció. Que el resultat de l’expressió es pot copiar.","Hem de comprovar que s’utilitza dintre d’una funció. Que el tipus de dades del resultat de l’expressió està inclòs en el tipus de dades que retorna la funció. Que el resultat de l’expressió es pot copiar.","Hem de comprovar que s’utilitza dintre d’una funció. Que el tipus de dades del resultat de l’expressió és el mateix que el tipus de dades que retorna la funció.","Hem de comprovar que s’utilitza dintre d’una funció. Que el tipus de dades del resultat de l’expressió està inclòs en el tipus de dades que retorna la funció.","Cap de les anteriors."],ans:1},
+  {year:"2023",topic:"semantic",q:"Quines operacions semàntiques fa el compilador de LOOS per <code class=\"inline-code\">var a:integer(10);</code>",opts:["Insereix a la taula de símbols la variable \"a\".","Crear el descriptor del tipus de dades com TInt. Insereix a la taula de símbols la variable \"a\".","Crear el descriptor del tipus de dades com TInt. Insereix a la taula de símbols la variable \"a\". Crear una llista de descriptors de valor per 10.","Crear el descriptor del tipus de dades com TInt. Insereix a la taula de símbols la variable \"a\". Crear una llista de descriptors de valor per 10. Comprova que es pot construir un Tint amb la llista de descriptors.","Cap de les anteriors."],ans:3},
+  {year:"2023",topic:"semantic",q:"Si volem comprovar que la instrucció <code class=\"inline-code\">return &lt;expressió&gt;</code> s’està utilitzant correctament hem de verificar que:",opts:["Hem de comprovar que s’utilitza dintre d’una funció. Que el tipus de dades del resultat de l’expressió és el mateix que el tipus de dades que retorna la funció. Que el resultat de l’expressió es pot copiar.","Hem de comprovar que s’utilitza dintre d’una funció. Que el tipus de dades del resultat de l’expressió està inclòs en el tipus de dades que retorna la funció. Que el resultat de l’expressió es pot copiar.","Hem de comprovar que s’utilitza dintre d’una funció. Que el tipus de dades del resultat de l’expressió és el mateix que el tipus de dades que retorna la funció.","Hem de comprovar que s’utilitza dintre d’una funció. Que el tipus de dades del resultat de l’expressió està inclòs en el tipus de dades que retorna la funció.","Cap de les anteriors."],ans:1},
 
   // ===== 2024-2025 =====
   {year:"2024",topic:"lexic",q:"Que signifiquen els següents operadors de les expressions regulars?",opts:["A* repetició d’una o més vegades, A+ repetició de zero o més vegades, A|B o és a A o és B.","A* repetició de zero o més vegades, A+ opcional, zero o una vegada, A|B o és a A o és B.","A* repetició d’una o més vegades, A+ opcional , zero o una vegada, A|B o és a A o és B.","A* repetició de zero o més vegades, A+ repetició d’una o més vegades, A|B o és a A o és B.","Cap de les anteriors."],ans:3},
   {year:"2024",topic:"lexic",q:"Quina diferència hi ha entre un autòmat finit determinista i l’autòmat d’un escàner?",opts:["L’autòmat de l’escàner és no determinista.","L’autòmat de l’escàner pot tenir més d’un estat final.","L’autòmat de l’escàner accepta un símbol si ha passat per un estat final.","L’autòmat de l’escàner accepta un símbol si en finalitzar la lectura de la seqüència d’entrada està en un estat final.","Cap de les anteriors."],ans:2},
   {year:"2024",topic:"lexic",q:"Un escàner creat a partir d’un autòmat finit...",opts:["Pot analitzar comentaris niats del tipus /*... /* ... /* ... */ ... */ ... */","Pot analitzar expressions aritmètiques que incloguin parèntesis.","Pot analitzar instruccions considerant que aquestes poden ser instruccions compostes formades per claus.","Pot analitzar tota mena d’estructures sintàctiques recursives.","Cap de les anteriors."],ans:4},
-  {year:"2024",topic:"sintax",q:"Respecte a la següent gramàtica:\n<I>::=<A>\n<A>::= <B> | If <A> Then <A> Else <A>\n<B>::= <C> | <B> {+ <C>} | '+' <C>\n<C> = 'x' | '(' <A> ')' | '-' <C>\n\nQuants nodes té l'arbre generat per l'expressió if x + x + x then +x else -x?",opts:["14","13","12","15","Cap de les anteriors."],ans:0},
-  {year:"2024",topic:"sintax",q:"Respecte a la mateixa gramàtica de la pregunta anterior:\n<I>::=<A>\n<A>::= <B> | If <A> Then <A> Else <A>\n<B>::= <C> | <B> {+ <C>} | '+' <C>\n<C> = 'x' | '(' <A> ')' | '-' <C>\n\nQuantes produccions es generen a partir dels símbols no terminals?",opts:["12","14","13","15","Cap de les anteriors."],ans:1},
+  {year:"2024",topic:"sintax",q:"Respecte a la següent gramàtica:<pre class=\"code-block\">&lt;I&gt;::=&lt;A&gt;\n&lt;A&gt;::= &lt;B&gt; | If &lt;A&gt; Then &lt;A&gt; Else &lt;A&gt;\n&lt;B&gt;::= &lt;C&gt; | &lt;B&gt; {+ &lt;C&gt;} | '+' &lt;C&gt;\n&lt;C&gt; = 'x' | '(' &lt;A&gt; ')' | '-' &lt;C&gt;</pre>Quants nodes té l'arbre generat per l'expressió <code class=\"inline-code\">if x + x + x then +x else -x</code>?",opts:["14","13","12","15","Cap de les anteriors."],ans:0},
+  {year:"2024",topic:"sintax",q:"Respecte a la mateixa gramàtica de la pregunta anterior:<pre class=\"code-block\">&lt;I&gt;::=&lt;A&gt;\n&lt;A&gt;::= &lt;B&gt; | If &lt;A&gt; Then &lt;A&gt; Else &lt;A&gt;\n&lt;B&gt;::= &lt;C&gt; | &lt;B&gt; {+ &lt;C&gt;} | '+' &lt;C&gt;\n&lt;C&gt; = 'x' | '(' &lt;A&gt; ')' | '-' &lt;C&gt;</pre>Quantes produccions es generen a partir dels símbols no terminals?",opts:["12","14","13","15","Cap de les anteriors."],ans:1},
   {year:"2024",topic:"sintax",q:"Como són les gramàtiques dels llenguatges de programació?",opts:["Un llenguatge de programació es pot generar amb una gramàtica depenent del context i s’utilitza una gramàtica lliure del context per analitzar-lo.","Un llenguatge de programació es pot generar amb una gramàtica lliure del context i s’utilitza una gramàtica depenent del context per analitzar-lo.","Un llenguatge de programació es pot generar i s’utilitza per analitzar-lo una gramàtica depenent del context.","Un llenguatge de programació es pot generar i s’utilitza per analitzar-lo una gramàtica lliure del context.","Cap de les anteriors."],ans:0},
   {year:"2024",topic:"sintax",q:"L’operador potencia ^ és un operador associatiu per la dreta. Com podem representar aquesta propietat en una gramàtica?",opts:["<potencia>::=<operand> ^ <operand>","<potencia>::=<operand> {^ <operand>}","<potencia>::=[<potencia> ^] <operand>","<potencia>::=<operand> [^ <potencia>]","Cap de les anteriors."],ans:3},
   {year:"2024",topic:"sintax",q:"Quina producció mai no pot formar part d’una gramàtica LL(1)?",opts:["A→B","A→x","A→Ax","A→xA","Cap de les anteriors."],ans:2},
   {year:"2024",topic:"sintax",q:"Com un parser generat a partir de la conversió d’una gramàtica BNF en programa resolt les ambigüitats gramaticals?",opts:["En els casos d’una unió selecciona el primer cas que tingui en els seus primers el símbol llegit per l’escàner.","En un opcional selecciona l’opcional quan aquest tingui en els seus primers el símbol llegit per l’escàner.","En una repetició selecciona l’opcional quan aquest tingui en els seus primers el símbol llegit per l’escàner.","Totes les anteriors.","Cap de les anteriors."],ans:3},
-  {year:"2024",topic:"semantic",q:"Respecte al següent codi:\nProcedure p1(a:real,&b:integer) {\n  var c:real;\n  var j:integer;\n  c=2.0;\n  j=2;\n  function f1(m:real,j:integer) {\n    var e:real;\n    e = m + 3*j;\n    IMPRIMIR_TAULA_SIMBOLS;\n    return e;\n  }\n}\n\nQuina és la resposta correcta pel que fa al nombre i tipus d’entrades a la taula de símbols?",opts:["ETSFuncio:2, ETSVariable:7, TSeparador:2, TSeparadorFuncio:2","ETSFuncio:2, ETSVariable:3, TSeparador:2, TSeparadorFuncio:1","ETSFuncio:2, ETSVariable:5, TSeparador:2, TSeparadorFuncio:2","ETSFuncio:2, ETSVariable:7, TSeparador:2, TSeparadorFuncio:1","Cap de les anteriors."],ans:0},
-  {year:"2024",topic:"semantic",q:"Quantes operacions de comprovació i càlcul de tipus tenim al següent bloc d’instruccions:\nvar a:integer;\na = 20 + 15;",opts:["6","5","7","4","Cap de les anteriors."],ans:0},
+  {year:"2024",topic:"semantic",q:"Respecte al següent codi:<pre class=\"code-block\">Procedure p1(a:real,&amp;b:integer) {\n  var c:real;\n  var j:integer;\n  c=2.0;\n  j=2;\n  function f1(m:real,j:integer) {\n    var e:real;\n    e = m + 3*j;\n    IMPRIMIR_TAULA_SIMBOLS;\n    return e;\n  }\n}</pre>Quina és la resposta correcta pel que fa al nombre i tipus d’entrades a la taula de símbols?",opts:["ETSFuncio:2, ETSVariable:7, TSeparador:2, TSeparadorFuncio:2","ETSFuncio:2, ETSVariable:3, TSeparador:2, TSeparadorFuncio:1","ETSFuncio:2, ETSVariable:5, TSeparador:2, TSeparadorFuncio:2","ETSFuncio:2, ETSVariable:7, TSeparador:2, TSeparadorFuncio:1","Cap de les anteriors."],ans:0},
+  {year:"2024",topic:"semantic",q:"Quantes operacions de comprovació i càlcul de tipus tenim al següent bloc d’instruccions:<pre class=\"code-block\">var a:integer;\na = 20 + 15;</pre>",opts:["6","5","7","4","Cap de les anteriors."],ans:0},
   {year:"2024",topic:"semantic",q:"Quina estructura té la taula de símbols del llenguatge de programació LOOS?",opts:["Pila pels àmbits niats i graf acíclic per les classes.","Pila pels àmbits niats i arbre per les classes.","Pila per les classes àmbits niats i graf acíclic pels àmbits niats.","Pila per les classes i arbre pels àmbits niats.","Cap de les anteriors."],ans:1},
-  {year:"2024",topic:"semantic",q:"Per a què s’utilitza el segon paràmetre de <ElementClasse(classe:TClasse,nomRec)> a la gramàtica de LOOS?",opts:["Perquè es pot declarar un camp de la classe que el seu tipus de dades contingui una referència a la classe, i com s’està declarant en aquell moment la classe no es pot trobar a la taula de símbols.","Perquè no es pot declarar un camp de la classe que el seu tipus de dades contingui una referència a la classe.","Perquè una classe és un tipus de dades i els tipus de dades de LOOS poden ser recursius.","Perquè a LOOS una classe no pot heretar de forma recursiva.","Cap de les anteriors."],ans:2},
+  {year:"2024",topic:"semantic",q:"Per a què s’utilitza el segon paràmetre de <code class=\"inline-code\">&lt;ElementClasse(classe:TClasse,nomRec)&gt;</code> a la gramàtica de LOOS?",opts:["Perquè es pot declarar un camp de la classe que el seu tipus de dades contingui una referència a la classe, i com s’està declarant en aquell moment la classe no es pot trobar a la taula de símbols.","Perquè no es pot declarar un camp de la classe que el seu tipus de dades contingui una referència a la classe.","Perquè una classe és un tipus de dades i els tipus de dades de LOOS poden ser recursius.","Perquè a LOOS una classe no pot heretar de forma recursiva.","Cap de les anteriors."],ans:2},
   {year:"2024",topic:"semantic",q:"Que indica la classe a un separador de funció?",opts:["És la classe a la qual pertany el mètode que es comença a compilar quan es posa el separador de funció a la taula de símbols.","És la classe a la qual pertany el mètode que s’estava compilant abans de posar el separador de funció a la taula de símbols.","a) i la funció de cerca de la taula de símbols inclourà la cerca pels elements de la classe.","b) i la funció de cerca de la taula de símbols inclourà la cerca pels elements de la classe.","Cap de les anteriors."],ans:2},
   {year:"2024",topic:"semantic",q:"En el cas que es puguin aplicar més d’una sobrecàrrega d’una funció en una crida, com ho resoldrà el compilador de LOOS?",opts:["Sempre dona un error de crida ambigua.","No dona error i aplica la sobrecàrrega que necessiti menys conversions de classe derivada a classe base.","No dona error si hi ha una sobrecàrrega que no necessita conversions de classe derivada a classe base. Si no existeix aquesta sobrecàrrega dona error.","No dona error si hi ha una sobrecàrrega que no necessita conversions de classe derivada a classe base. Si no existeix aquesta sobrecàrrega, selecciona la sobrecàrrega que apliqui les conversions de classe derivada a classe base als últims paràmetres.","Cap de les anteriors."],ans:2}
 ];
- 
+  
 const YEAR_LABELS = {
   "2020":"2020–2021","2021":"2021–2022","2022":"2022–2023","2023":"2023–2024","2024":"2024–2025"
 };
@@ -249,7 +261,6 @@ function render() {
     return;
   }
 
-  // Group by topic
   const groups = {};
   filtered.forEach(i => {
     const t = ALL_QUESTIONS[i].topic;
@@ -276,7 +287,7 @@ function render() {
 
 function renderCard(i, q, s, num) {
   const answered = s.answered;
-  return `<div class="q-card ${q.topic} ${answered?'answered':''}" id="card-${i}">
+  return `<div class="q-card${answered?' answered':''}" id="card-${i}">
     <div class="q-header">
       <div class="q-num">${num}</div>
       <div style="flex:1">
@@ -284,7 +295,7 @@ function renderCard(i, q, s, num) {
           <span class="q-badge">${YEAR_LABELS[q.year]}</span>
           <span class="q-topic">${TOPIC_LABELS[q.topic]}</span>
         </div>
-       <div class="q-text">${formatQuestion(q.q)}</div>
+        <div class="q-text">${q.q}</div>
       </div>
     </div>
     <div class="options">
@@ -295,31 +306,19 @@ function renderCard(i, q, s, num) {
           if (oi === s.chosen && s.chosen !== q.ans) cls = "wrong";
           if (oi === s.chosen && s.chosen === q.ans) cls = "correct";
         } else if (oi === s.chosen) cls = "selected";
+        // Aplicamos escapeHTML a las opciones para que los <Exp> no se rompan
         return `<div class="opt ${cls}" onclick="choose(${i},${oi})">
           <span class="opt-letter">${String.fromCharCode(97+oi)})</span>
-          <span>${o}</span>
+          <span>${escapeHTML(o)}</span>
         </div>`;
       }).join("")}
     </div>
     <div class="q-status${answered?' show':''} ${s.correct?'ok':'fail'}" id="status-${i}">
-      ${s.correct ? '✓ Correcte!' : (answered ? `✗ Incorrecte. La resposta correcta és: <strong>${String.fromCharCode(97+q.ans)}) ${q.opts[q.ans]}</strong>` : '')}
+      ${s.correct ? '✓ Correcte!' : (answered ? `✗ Incorrecte. La resposta correcta és: <strong>${String.fromCharCode(97+q.ans)}) ${escapeHTML(q.opts[q.ans])}</strong>` : '')}
     </div>
   </div>`;
 }
 
-function formatQuestion(text){
-  if(text.includes("\n")){
-    const parts = text.split("\n\n");
-    if(parts.length > 1){
-      return `
-        <div>${parts[0]}</div>
-        <div class="code-block">${parts.slice(1).join("\n\n")}</div>
-      `;
-    }
-  }
-  return text.replace(/\n/g,"<br>");
-}
- 
 function choose(i, oi) {
   if (state[i].answered) return;
   const q = ALL_QUESTIONS[i];
@@ -327,7 +326,6 @@ function choose(i, oi) {
   state[i].chosen = oi;
   state[i].correct = (oi === q.ans);
   
-  // Update card in place
   const card = document.getElementById("card-"+i);
   card.classList.add("answered");
   const opts = card.querySelectorAll(".opt");
@@ -341,7 +339,7 @@ function choose(i, oi) {
   statusEl.className = `q-status show ${state[i].correct?'ok':'fail'}`;
   statusEl.innerHTML = state[i].correct
     ? "✓ Correcte!"
-    : `✗ Incorrecte. La resposta correcta és: <strong>${String.fromCharCode(97+q.ans)}) ${q.opts[q.ans]}</strong>`;
+    : `✗ Incorrecte. La resposta correcta és: <strong>${String.fromCharCode(97+q.ans)}) ${escapeHTML(q.opts[q.ans])}</strong>`;
 
   const filtered = getFiltered();
   updateScore(filtered);
