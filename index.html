@@ -57,6 +57,30 @@
   .topic-section h2 { font-size: 1rem; color: #555; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; padding: 0 0.5rem; border-left: 3px solid #1a1a2e; padding-left: 0.75rem; }
   .section-wrap { display: flex; flex-direction: column; gap: 1.5rem; }
   @media (max-width: 600px) { .controls { flex-direction: column; } .score-bar { gap: 1rem; } }
+  /* ==== Bloques de código para preguntas semánticas ==== */
+ .code-block{
+   background:#f7f7f9;
+   border:1px solid #e0e0e0;
+   border-left:4px solid #1a1a2e;
+   border-radius:6px;
+   padding:0.7rem 0.8rem;
+   margin-top:0.6rem;
+   font-family: "Courier New", monospace;
+   font-size:0.85rem;
+   white-space:pre-wrap;
+   line-height:1.45;
+   color:#333;
+ }
+  .q-card.semantic{
+   border-left:5px solid #7a3cff;
+ }
+ .q-card.semantic .q-topic{
+   background:#f1e8ff;
+   color:#5c2bd6;
+ }
+ .q-card.semantic .opt{
+   line-height:1.6;
+ }
 </style>
 </head>
 <body>
@@ -252,7 +276,7 @@ function render() {
 
 function renderCard(i, q, s, num) {
   const answered = s.answered;
-  return `<div class="q-card${answered?' answered':''}" id="card-${i}">
+  return `<div class="q-card ${q.topic} ${answered?'answered':''}" id="card-${i}">
     <div class="q-header">
       <div class="q-num">${num}</div>
       <div style="flex:1">
@@ -260,7 +284,7 @@ function renderCard(i, q, s, num) {
           <span class="q-badge">${YEAR_LABELS[q.year]}</span>
           <span class="q-topic">${TOPIC_LABELS[q.topic]}</span>
         </div>
-        <div class="q-text">${q.q}</div>
+       <div class="q-text">${formatQuestion(q.q)}</div>
       </div>
     </div>
     <div class="options">
@@ -283,6 +307,19 @@ function renderCard(i, q, s, num) {
   </div>`;
 }
 
+function formatQuestion(text){
+  if(text.includes("\n")){
+    const parts = text.split("\n\n");
+    if(parts.length > 1){
+      return `
+        <div>${parts[0]}</div>
+        <div class="code-block">${parts.slice(1).join("\n\n")}</div>
+      `;
+    }
+  }
+  return text.replace(/\n/g,"<br>");
+}
+ 
 function choose(i, oi) {
   if (state[i].answered) return;
   const q = ALL_QUESTIONS[i];
